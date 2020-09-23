@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewData["Title"] = "ShouHouseInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/admin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/admin/css/admin.css" rel="stylesheet" />
+<script src="~/My97DatePicker/My97DatePicker/calendar.js"></script>
+<script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script src="~/Scripts/Scripts/layui.js"></script>
+<script src="~/Scripts/common.js"></script>
+
+<div class="wrap-container clearfix">
+    <div class="column-content-detail" style="top:10px">
+        <div style="top:5px">
+            <div style="margin-top:20px">
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="name" placeholder="请输入楼盘名称">
+                </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="kpri" placeholder="请输入开盘日期" onclick="WdatePicker()">
+                </span> 
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="jsrq" placeholder="请输入交盘日期" onclick="WdatePicker()">
+                </span>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Sele()">搜索</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="qing()">清空</button>
+            </div>
+        </div>
+        <div class="layui-form" id="table-list" style="top:5px">
+            <table class="layui-table" lay-even lay-skin="nob">
+                <colgroup>
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                </colgroup>
+                <thead class="layui-table">
+                    <tr style="color:#20bceb">
+                        <td class="hidden-xs">楼盘名称</td>
+                        <td class="hidden-xs">楼盘图片</td>
+                        <td class="hidden-xs">开盘日期</td>
+                        <td class="hidden-xs">项目地址</td>
+                        <td class="hidden-xs">售楼处</td>
+                        <td class="hidden-xs">开发商</td>
+                        <td class="hidden-xs">销售状态</td>
+                        <td class="hidden-xs">建筑面积</td>
+                        <td class="hidden-xs">交房时间</td>
+                        <td class="hidden-xs">产权年限</td>
+                        <td class="hidden-xs">建筑类别</td>
+                        <td class="hidden-xs">容积率</td>
+                        <td class="hidden-xs">绿化率</td>
+                        <td class="hidden-xs">周边规划</td>
+                    </tr>
+                </thead>
+                <tbody id="rb"></tbody>
+            </table>
+        </div>
+        <div style="margin-left:450px">
+            <input type="button" class="layui-btn" onclick="First()" value="首页" />
+            <input type="button" class="layui-btn" onclick="Pre()" value="上一页" />
+            <input type="button" class="layui-btn" onclick="Next()" value="下一页" />
+            <input type="button" class="layui-btn" onclick="Wei()" value="尾页" />
+        </div>
+    </div>
+</div>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        Sele();
+    })
+    function qing() {
+        var na = $("#name").val("");
+        var ks = $("#kpri").val("");
+        var js = $("#jsrq").val("");
+    }
+    var pageindex = 1;
+    var pagesize = 4;
+    var pagecount = 1;
+    var allcount = 1;
+
+    function First() {
+        pageindex = 1;
+        Sele();
+    }
+
+    function Pre() {
+        if (pageindex > 1) {
+            pageindex--;
+            Sele();
+        } else {
+            alert("这是首页");
+        }
+    }
+
+    function Next() {
+        pageindex++;
+        Sele();
+    }
+
+    function Wei() {
+        pageindex = pagecount;
+        Sele();
+    }
+
+    function Sele() {
+        var na = $("#name").val();
+        var ks = $("#kpri").val();
+        var js = $("#jsrq").val();
+
+        $.ajax({
+            url: "http://localhost:60345/api/HouseInfoContr/GetHouseInfos?hname=" + na + "&htptime=" + ks + "&hantime=" + js + "&pageindex=" + pageindex + "&pagesize=" + pagesize,
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    console.log(res);
+                    pageindex = res.pageIndex;
+                    pagesize = res.pageSize;
+                    pagecount = res.pageCount;
+                    allcount = res.allCount;
+                    var tg = "";
+                    $("#rb").empty();
+                    $(res.houseInfos).each(function () {
+                        tg += "<tr>"
+                            + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.htId + ")'>" + this.hName + "</a></td>"
+                            + "<td><a style='cursor: pointer' onclick='fd(" + this.htId + ")'>" + "<img src = " + this.htPicture + " style='width: 80px; height: 80px'/>" + "</a></td>"
+                            + "<td>" + this.htpDateTime + "</td>"
+                            + "<td>" + this.projictSite + "</td>"
+                            + "<td>" + this.sellHouse + "</td>"
+                            + "<td>" + this.developers + "</td>"
+                            + "<td>" + this.sellState + "</td>"
+                            + "<td>" + this.architecturearea + "</td>"
+                            + "<td>" + this.handHouseTime + "</td>"
+                            + "<td>" + this.yearAstrict + "</td>"
+                            + "<td>" + this.sellState + "</td>"
+                            + "<td>" + this.plot + "</td>"
+                            + "<td>" + this.greeningrate + "</td>"
+                            + "<td>" + this.rim + "</td>"
+                            + "</tr>";
+                    })
+                    $("#rb").append(tg);
+                }
+        })
+    }
+    function ck(htId) {
+        location.href = "http://localhost:5400/HouseInfoContrller/SeleHoutypes?Ids=" + htId;
+    }
+    function fd(htId) {
+        alert(htId);
+
+    }
+</script>

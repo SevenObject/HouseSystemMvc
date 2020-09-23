@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewData["Title"] = "ShowHousType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrap-container clearfix">
+    <div class="column-content-detail" style="top:10px">
+        <div style="top:5px">
+            <div style="margin-top:20px">
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="cc" placeholder="请输入朝向">
+                </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="qsjg" placeholder="请输入起始价格">万&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="zzjg" placeholder="请输入最终价格">万&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                <select name="category" id="Select1" lay-verify="required" style="border:solid,1px">
+                    <option value="0">请选择楼盘</option>
+
+                </select>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Show()">搜索</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Qing()">清空</button>
+            </div>
+        </div>
+        <div class="layui-form" id="table-list" style="top:5px">
+            <table class="layui-table" lay-even lay-skin="nob">
+                <colgroup>
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                </colgroup>
+                <thead class="layui-table">
+                    <tr style="color:#20bceb">
+                        <td class="hidden-xs">户型</td>
+                        <td class="hidden-xs">户型图片</td>
+                        <td class="hidden-xs">建筑面积</td>
+                        <td class="hidden-xs">总价</td>
+                        <td class="hidden-xs">朝向</td>
+                        <td class="hidden-xs">楼盘</td>
+                        <td class="hidden-xs">售楼处</td>
+                        <td class="hidden-xs">交房时间</td>
+                    </tr>
+                </thead>
+                <tbody id="rb"></tbody>
+            </table>
+        </div>
+        <div style="margin-left:450px">
+            <input type="button" class="layui-btn" onclick="First()" value="首页" />
+            <input type="button" class="layui-btn" onclick="Pre()" value="上一页" />
+            <input type="button" class="layui-btn" onclick="Next()" value="下一页" />
+            <input type="button" class="layui-btn" onclick="Wei()" value="尾页" />
+        </div>
+    </div>
+</div>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        Show();
+
+    })
+    function Qing() {
+        var se = $("#Select1").val("");
+        var cx = $("#cc").val("");
+        var qs = $("#qsjg").val("");
+ 
+    }
+    var pageindex = 1;
+    var pagesize = 5;
+    var pagecount = 1;
+    var allcount = 1;
+    function First() {
+        pageindex = 1;
+        Show();
+    }
+
+    function Pre() {
+        if (pageindex > 1) {
+            pageindex--;
+            Show();
+        } else {
+            alert("这是首页");
+        }
+    }
+
+    function Next() {
+        pageindex++;
+        Show();
+    }
+
+    function Wei() {
+        pageindex = pagecount;
+        Show();
+    }
+    function Show() {
+        var se = $("#Select1").val();
+        var cx = $("#cc").val();
+        var qs = $("#qsjg").val();
+        var zz = $("#zzjg").val();
+
+        $.ajax({
+            url: "http://localhost:60345/api/HousTypeContr/GetHousTypes?pageindex=" + pageindex + "&pagesize=" + pagesize + "&htid=" + se + "&orien=" + cx + "&price=" + qs + "&prices=" + zz,
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    console.log(res);
+                    pageindex = res.pageIndex;
+                    pagesize = res.pageSize;
+                    pagecount = res.pageCount;
+                    allcount = res.allCount;
+                    var tg = "";
+                    $("#rb").empty();
+                    $(res.housTypes).each(function () {
+                        tg += "<tr>"
+                            + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.hId + ")'>" + this.hNames + "</a></td>"
+                            + "<td>" + this.hoousePicture + "</td>"
+                            + "<td>" + this.houseArea + "</td>"
+                            + "<td>" + this.priceCount + "</td>"
+                            + "<td>" + this.orientation + "</td>"
+                            + "<td>" + this.hName + "</td>"
+                            + "<td>" + this.sellHouse + "</td>"
+                            + "<td>" + this.handHouseTime + "</td>"
+                            + "</tr>";
+                    })
+                    $("#rb").append(tg);
+                }
+        })
+    }
+    function ck(hId) {
+        location.href = "http://localhost:5400/HousType/SeleHousType?Ids=" + hId;
+    }
+</script>

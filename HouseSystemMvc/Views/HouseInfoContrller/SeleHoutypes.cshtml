@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "SeleHoutypes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" value="@ViewBag.ss" id="hidID" />
+<div class="wrap-container clearfix">
+    <div class="column-content-detail" style="top:10px">
+
+        <div class="layui-form" id="table-list" style="top:5px">
+            <table class="layui-table" lay-even lay-skin="nob">
+                <colgroup>
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                </colgroup>
+                <thead class="layui-table">
+                    <tr style="color:#20bceb">
+                        <td class="hidden-xs">户型</td>
+                        <td class="hidden-xs">户型图片</td>
+                        <td class="hidden-xs">建筑面积</td>
+                        <td class="hidden-xs">总价</td>
+                        <td class="hidden-xs">朝向</td>
+                        <td class="hidden-xs">楼盘</td>
+                        <td class="hidden-xs">售楼处</td>
+                        <td class="hidden-xs">交房时间</td>
+                    </tr>
+                </thead>
+                <tbody id="rb"></tbody>
+            </table>
+        </div>
+        <div style="margin-left:450px">
+            <input type="button" class="layui-btn" onclick="First()" value="首页" />
+            <input type="button" class="layui-btn" onclick="Pre()" value="上一页" />
+            <input type="button" class="layui-btn" onclick="Next()" value="下一页" />
+            <input type="button" class="layui-btn" onclick="Wei()" value="尾页" />
+        </div>
+    </div>
+</div>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        Show();
+
+    })
+    var pageindex = 1;
+    var pagesize = 5;
+    var pagecount = 1;
+    var allcount = 1;
+    function First() {
+        pageindex = 1;
+        Show();
+    }
+
+    function Pre() {
+        if (pageindex > 1) {
+            pageindex--;
+            Show();
+        } else {
+            alert("这是首页");
+        }
+    }
+
+    function Next() {
+        pageindex++;
+        Show();
+    }
+
+    function Wei() {
+        pageindex = pagecount;
+        Show();
+    }
+    function Show() {
+        var hid = $("#hidID").val();
+        $.ajax({
+            url: "http://localhost:60345/api/HousTypeContr/Sel?ids=" + hid + "&pageindex=" + pageindex + "&pagesize=" + pagesize,
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    console.log(res);
+                    pageindex = res.pageIndex;
+                    pagesize = res.pageSize;
+                    pagecount = res.pageCount;
+                    allcount = res.allCount;
+                    var tg = "";
+                    $("#rb").empty();
+                    $(res.housTypes).each(function () {
+                        tg += "<tr>"
+                            + "<td>" + this.hNames + "</td>"
+                            + "<td>" + this.hoousePicture + "</td>"
+                            + "<td>" + this.houseArea + "</td>"
+                            + "<td>" + this.priceCount + "</td>"
+                            + "<td>" + this.orientation + "</td>"
+                            + "<td>" + this.hName + "</td>"
+                            + "<td>" + this.sellHouse + "</td>"
+                            + "<td>" + this.handHouseTime + "</td>"
+                            + "</tr>";
+                    })
+                    $("#rb").append(tg);
+                }
+        })
+    }
+</script>
+

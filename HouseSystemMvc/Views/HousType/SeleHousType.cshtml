@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewData["Title"] = "SeleHousType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<input type="hidden" value="@ViewBag.ss" id="hidID" />
+<div class="wrap-container clearfix">
+    <div class="column-content-detail" style="top:10px">
+
+        <div class="layui-form" id="table-list" style="top:5px">
+            <table class="layui-table" lay-even lay-skin="nob">
+                <colgroup>
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                </colgroup>
+                <thead class="layui-table">
+                    <tr style="color:#20bceb">
+                        <td class="hidden-xs">房间号</td>
+                        <td class="hidden-xs">房间图片</td>
+                        <td class="hidden-xs">均价</td>
+                        <td class="hidden-xs">房间状态</td>
+                        <td class="hidden-xs">户型</td>
+                        <td class="hidden-xs">楼盘</td>
+                    </tr>
+                </thead>
+                <tbody id="rb"></tbody>
+            </table>
+        </div>
+        <div style="margin-left:400px">
+            <input type="button" class="layui-btn" onclick="First()" value="首页" />
+            <input type="button" class="layui-btn" onclick="Pre()" value="上一页" />
+            <input type="button" class="layui-btn" onclick="Next()" value="下一页" />
+            <input type="button" class="layui-btn" onclick="Wei()" value="尾页" />
+        </div>
+    </div>
+</div>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        Show();
+
+    })
+    var pageindex = 1;
+    var pagesize = 4;
+    var pagecount = 1;
+    var allcount = 1;
+    function First() {
+        pageindex = 1;
+        Show();
+    }
+
+    function Pre() {
+        if (pageindex > 1) {
+            pageindex--;
+            Show();
+        } else {
+            alert("这是首页");
+        }
+    }
+
+    function Next() {
+        pageindex++;
+        Show();
+    }
+
+    function Wei() {
+        pageindex = pagecount;
+        Show();
+    }
+    function Show() {
+        var hid = $("#hidID").val();
+        $.ajax({
+            url: "http://localhost:60345/api/HouseShapeContr/SeleShape?ids=" + hid + "&pageindex=" + pageindex + "&pagesize=" + pagesize,
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    console.log(res);
+                    pageindex = res.pageIndex;
+                    pagesize = res.pageSize;
+                    pagecount = res.pageCount;
+                    allcount = res.allCount;
+                    var tg = "";
+                    $("#rb").empty();
+                    $(res.houseShapes).each(function () {
+                        tg += "<tr>"
+                            + "<td>" + this.hNumber + "</td>"
+                            + "<td>" + this.housePicture + "</td>"
+                            + "<td>" + this.averagePrice + "</td>"
+                            + "<td>" + (this.houseState == 0 ? "在售" : this.houseState==1?"已售":"预定") + "</td>"
+                            + "<td>" + this.hNames + "</td>"
+                            + "<td>" + this.hName + "</td>"
+                            + "</tr>";
+                    })
+                    $("#rb").append(tg);
+                }
+        })
+    }
+</script>
+
