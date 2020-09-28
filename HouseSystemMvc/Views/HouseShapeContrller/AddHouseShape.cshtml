@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "AddHouseShape";
+}
+
+<table class="table">
+    <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
+        <label class="layui-form-label">房间号：</label>
+        <div class="layui-input-block">
+            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入楼盘名称；如：东滩云墅" ;>
+
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
+        <label class="layui-form-label">均价：</label>
+        <div class="layui-input-block">
+            <form method="post" enctype="multipart/form-data" id="form">
+                <input type="file" name="file" id="file" multiple="multiple" />
+            </form>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
+        <label class="layui-form-label">经纪人：</label>
+        <div class="layui-input-block">
+            <select id="Select1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择贷款" ;>
+                <option value="0">请选择经纪人</option>
+            </select>
+        </div>
+    </div>
+    <input type="hidden" id="zt" value="0" />
+    <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
+        <label class="layui-form-label">楼盘：</label>
+        <div class="layui-input-block">
+            <select id="Selectlp" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择贷款" ;>
+                <option value="0">请选择楼盘</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
+        <label class="layui-form-label">户型：</label>
+        <div class="layui-input-block">
+            <select id="Selecthx" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择贷款" ;>
+                <option value="0">请选择户型</option>
+                <option value="1">3室2厅1卫1厨</option>
+                <option value="14">3室2厅2卫1厨</option>
+                <option value="21">4室2厅2卫1厨</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="addst()">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="cong()">重置</button>
+        </div>
+    </div>
+</table>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:60345/api/HouseInfoContr/SeleHouInfo",
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    var op = "";
+                    $(res).each(function () {
+                        op += "<option value=" + this.htId + ">" + this.hName + "</option>";
+                    })
+                    $("#Selectlp").append(op);
+                }
+        })
+        $.ajax({
+            url: "http://localhost:60345/api/AdministratorDataContr/SAdministr",
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    var op = "";
+                    $(res).each(function () {
+                        op += "<option value=" + this.aId + ">" + this.aName + "</option>";
+                    })
+                    $("#Select1").append(op);
+                }
+        })
+    })
+    function addst() {
+        $.ajax({
+            url: "",
+            type: "",
+            dataType: "",
+            data: {},
+            success:
+                function (d) {
+
+                }
+        })
+    }
+</script>

@@ -20,12 +20,26 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span tyle="margin-left:10px;margin-top:-10px">
                     <input type="text" id="kpri" placeholder="请输入开盘日期" onclick="WdatePicker()">
-                </span> 
+                </span>
                 <span tyle="margin-left:10px;margin-top:-10px">
                     <input type="text" id="jsrq" placeholder="请输入交盘日期" onclick="WdatePicker()">
                 </span>
                 <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Sele()">搜索</button>
                 <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="qing()">清空</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Addlp()" style="background:#ff0000">添加楼盘</button>
             </div>
         </div>
         <div class="layui-form" id="table-list" style="top:5px">
@@ -60,19 +74,23 @@
                         <td class="hidden-xs">容积率</td>
                         <td class="hidden-xs">绿化率</td>
                         <td class="hidden-xs">周边规划</td>
+                        <td class="hidden-xs">操作</td>
                     </tr>
                 </thead>
                 <tbody id="rb"></tbody>
             </table>
         </div>
         <div style="margin-left:450px">
+            <span>当前第<span id="ji"></span>页</span>
             <input type="button" class="layui-btn" onclick="First()" value="首页" />
             <input type="button" class="layui-btn" onclick="Pre()" value="上一页" />
             <input type="button" class="layui-btn" onclick="Next()" value="下一页" />
             <input type="button" class="layui-btn" onclick="Wei()" value="尾页" />
+ 
         </div>
     </div>
 </div>
+<a style="color:#f02828"></a>
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -116,6 +134,7 @@
         var na = $("#name").val();
         var ks = $("#kpri").val();
         var js = $("#jsrq").val();
+ 
 
         $.ajax({
             url: "http://localhost:60345/api/HouseInfoContr/GetHouseInfos?hname=" + na + "&htptime=" + ks + "&hantime=" + js + "&pageindex=" + pageindex + "&pagesize=" + pagesize,
@@ -133,7 +152,7 @@
                     $(res.houseInfos).each(function () {
                         tg += "<tr>"
                             + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.htId + ")'>" + this.hName + "</a></td>"
-                            + "<td><a style='cursor: pointer' onclick='fd(" + this.htId + ")'>" + "<img src = " + this.htPicture + " style='width: 80px; height: 80px'/>" + "</a></td>"
+                            + "<td><a style='cursor: pointer' onclick='fd(" + this.htId + ")'>" + "<img src = " + this.htPicture + " style='width: 110px; height: 100px'/>" + "</a></td>"
                             + "<td>" + this.htpDateTime + "</td>"
                             + "<td>" + this.projictSite + "</td>"
                             + "<td>" + this.sellHouse + "</td>"
@@ -144,19 +163,42 @@
                             + "<td>" + this.yearAstrict + "</td>"
                             + "<td>" + this.sellState + "</td>"
                             + "<td>" + this.plot + "</td>"
-                            + "<td>" + this.greeningrate + "</td>"
+                            + "<td>" + this.greeningrate + "</td>" 
                             + "<td>" + this.rim + "</td>"
+                            + "<td><a style='cursor: pointer;color:#f02828' onclick='xg(" + this.htId + ")'>修改</a><a style='cursor: pointer;color:#f02828' onclick='sc(" + this.htId + ")'>删除</a></td>"
                             + "</tr>";
                     })
                     $("#rb").append(tg);
                 }
         })
     }
+    function xg(htId) {
+        location.href = "http://localhost:5400/HouseInfoContrller/UpdateHouseInfo?Ids=" + htId;
+         
+    }
     function ck(htId) {
         location.href = "http://localhost:5400/HouseInfoContrller/SeleHoutypes?Ids=" + htId;
     }
-    function fd(htId) {
-        alert(htId);
-
+    function Addlp() {
+        location.href = "http://localhost:5400/HouseInfoContrller/AddHouseInfo";
+    }
+     
+    function sc(htId) {
+        if (confirm("确定删除吗？")) {
+            $.ajax({
+                url: "http://localhost:60345/api/HouseInfoContr/DeleHouseInfo?ids=" + htId,
+                type: "POST",
+                dataType: "json",
+                success:
+                    function (d) {
+                        if (d > 0) {
+                            alert("删除成功");
+                        } else {
+                            alert("删除失败");
+                        }
+                    }
+            })
+        }
+        
     }
 </script>

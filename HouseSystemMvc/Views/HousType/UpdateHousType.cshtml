@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewData["Title"] = "UpdateHousType";
+}
+<input type="hidden" value="@ViewBag.ss" id="upid" />
+<table class="table">
+    <div class="layui-form-item" style="margin-bottom:40px;width: 90%">
+        <label class="layui-form-label">户型：</label>
+        <div class="layui-input-block">
+            <input type="text" id="hx" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+            <span style="color:red">*不可更改*</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:40px;width: 90%">
+        <label class="layui-form-label">户型面积：</label>
+        <div class="layui-input-block">
+            <input type="text" id="hxmj" required lay-verify="required" autocomplete="off" class="layui-input "readonly>
+            <span style="color:red">*不可更改*</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:40px;width: 90%">
+        <label class="layui-form-label">总价：</label>
+        <div class="layui-input-block">
+            <input type="text" id="zj" required lay-verify="required" autocomplete="off" class="layui-input ">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:40px;width: 90%" readonly>
+        <label class="layui-form-label">照片：</label>
+        <div class="layui-input-block">
+            <div id="pic" style='width: 80px; height: 80px'></div>
+            <span style="color:red">*不可更改*</span>
+        </div>
+        
+    </div>
+    <div class="layui-form-item" style="margin-bottom:40px;width: 90%">
+        <label class="layui-form-label">朝向：</label>
+        <div class="layui-input-block">
+            <input type="text" id="cx" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+            <span style="color:red">*不可更改*</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:40px;width: 90%">
+        <label class="layui-form-label">楼盘：</label>
+         
+            <div class="layui-input-block">
+                <input type="text" id="lp" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+                <span style="color:red">*不可更改*</span>
+            </div>
+        < 
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="upAdds()">保存修改</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="quxiao()">取消修改</button>
+        </div>
+    </div>
+</table>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var aid = $("#upid").val();
+        $.ajax({
+            url: "http://localhost:60345/api/HousTypeContr/SeleHous?ids=" + aid,
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    $(res).each(function () {
+                        $("#hx").val(this.hNames);
+                        $("#hxmj").val(this.houseArea);
+                        $("#zj").val(this.priceCount);
+                        $("#pic").append('<img src = "' + this.hoousePicture + '" style="width: 110px; height: 120px"/>');
+                        $("#cx").val(this.orientation);
+                        $("#lp").val(this.sellHouse);
+                    })
+                }
+        })
+    })
+    function upAdds() {
+        var hids = $("#upid").val();
+        var pri = $("#zj").val();
+        $.ajax({
+            url: "http://localhost:60345/api/HousTypeContr/UpdateHousType?price=" + pri + "&hid=" + hids,
+            type: "POST",
+            dataType: "json",
+            success:
+                function (d) {
+                    if (d > 0) {
+                        alert("修改成功！");
+                        location.href = "http://localhost:5400/HousType/ShowHousType";
+                    } else {
+                        alert("修改失败！请重试！");
+                    }
+                }
+        })
+    }
+    function quxiao() {
+        location.href = "http://localhost:5400/HousType/ShowHousType";
+    }
+</script>
+
