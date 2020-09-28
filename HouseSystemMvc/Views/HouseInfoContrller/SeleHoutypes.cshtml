@@ -95,6 +95,7 @@
                     var tg = "";
                     $("#rb").empty();
                     $(res.housTypes).each(function () {
+                        var handHouseTime = String(this.handHouseTime).substring(0, 4);
                         tg += "<tr>"
                             + "<td>" + this.hNames + "</td>"
                             + "<td>" + this.hoousePicture + "</td>"
@@ -103,7 +104,7 @@
                             + "<td>" + this.orientation + "</td>"
                             + "<td>" + this.hName + "</td>"
                             + "<td>" + this.sellHouse + "</td>"
-                            + "<td>" + this.handHouseTime + "</td>"
+                            + "<td>" + handHouseTime + "</td>"
                             + "</tr>";
                     })
                     $("#rb").append(tg);

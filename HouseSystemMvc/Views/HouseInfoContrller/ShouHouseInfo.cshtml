@@ -150,16 +150,18 @@
                     var tg = "";
                     $("#rb").empty();
                     $(res.houseInfos).each(function () {
+                        var startTime = String(this.htpDateTime).substring(0, 10);
+                        var handHouseTime = String(this.handHouseTime).substring(0, 10);
                         tg += "<tr>"
                             + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.htId + ")'>" + this.hName + "</a></td>"
                             + "<td><a style='cursor: pointer' onclick='fd(" + this.htId + ")'>" + "<img src = " + this.htPicture + " style='width: 110px; height: 100px'/>" + "</a></td>"
-                            + "<td>" + this.htpDateTime + "</td>"
+                            + "<td>" + startTime + "</td>"
                             + "<td>" + this.projictSite + "</td>"
                             + "<td>" + this.sellHouse + "</td>"
                             + "<td>" + this.developers + "</td>"
                             + "<td>" + this.sellState + "</td>"
                             + "<td>" + this.architecturearea + "</td>"
-                            + "<td>" + this.handHouseTime + "</td>"
+                            + "<td>" + handHouseTime + "</td>"
                             + "<td>" + this.yearAstrict + "</td>"
                             + "<td>" + this.sellState + "</td>"
                             + "<td>" + this.plot + "</td>"
