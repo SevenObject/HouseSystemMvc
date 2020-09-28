@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "AddCon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>签订合同</h1>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title style="font-size:20px">签订合同</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <div style="margin-left:200px;width:800px;height:800px">
+        <div style="margin-left:35%"><h1 style="font-size:30px">售房购房协议书</h1></div>
+        <div>甲方(售房人):<input type="text" id="AdminName" style="border:0px,0px,0px,1px" />乙方(买房人):<input type="text" id="ClientName" style="border:0px,0px,0px,1px" /></div>
+        <div>房产:<input id="HSId" type="text" style="border:0px,0px,0px,1px" /></div>      
+        <div><p>&emsp;&emsp;根据中华人民共和国有关法律、法规规定,甲、乙双方遵循自愿、公平和诚实信用的原则,经协商一致订立本合同,以资共同遵守。</p></div>
+        <div><p>&emsp;&emsp;第一条:甲方自愿将其房屋出售给乙方,乙方也已充分了解该房屋具体状况,并自愿买受该房屋。该房屋具体状况如下</p></div>
+        <div><p>&emsp;&emsp;出售的房屋座落于宿舍楼三层,三室一厅一周一卫一材棚,建筑面积为93平方米(此面积含材棚面积) (以房产证为准);</p></div>
+        <div><p>&emsp;&emsp;第二条:甲方保证对该房屋具有处分权,保证该房屋所有权无抵押,产权合法。如下</p></div>
+        <div><p>&emsp;&emsp;第三条:甲乙双方经过协商确定该房屋按照总价为(人民币）大写:<input type="text" id="SumPriceUp" style="border:0px,0px,0px,1px" />整, (小写)<input type="text" id="SumPriceDown" style="border:0px,0px,0px,1px" />元成效(购房总价中已包含材棚面积)。</p></div>
+        <div><p>&emsp;&emsp;第四条:本协议签定后,所有关于本协议所指房屋的附属事项及相关费用一并转让与乙方,双方就此问题不再另行协议。</p></div>
+        <div><p>&emsp;&emsp;第五条:乙方在<input id="WorkDate" type="datetime-local" />,按照及方协商结果支付给甲方前期房款(人民币)(大写)<input type="text" id="FirstPriceUp" style="border:0px,0px,0px,1px" /> 万元整, (小写)<input type="text" id="FirstPriceLower" style="border:0px,0px,0px,1px" /> 元。</p></div>
+        <div><p>&emsp;&emsp;第六条:房屋的相关证件过户手续由甲方办理,办理该房屋过户手续所产生的各项费用及应当缴纳的税费,由甲方独立承担。</p></div>
+        <div><p>&emsp;&emsp;第七条:后续房款的支付金额及时间。</p></div>
+        <div><p>&emsp;&emsp;(1)、在本协议签定之日起双方办理该房屋过户手续完毕后,将剩余房款,一次付清。</p></div>
+        <div><p>&emsp;&emsp;(2)甲方应在双方规定正式交付房屋日期前腾空该房屋。</p></div>
+        <div><p>&emsp;&emsp;(3)乙方在协商日期未按规定支付房价款的,则按下列约定承担:</p></div>
+        <div><p>&emsp;&emsp;第八条:该房屋毁损、失火的风险自房屋正式交付之日起转移给乙方。</p></div>
+        <div><p>&emsp;&emsp;第九条:该房屋正式交付时,涉及到的水、电、通讯等相关杂费,由甲方缴清,房款中不包含房屋移交前所产生的各项费用。</p></div>
+        <div><p>&emsp;&emsp;第十条:本契约未尽事宜,甲、乙双方可另行订立补充条款或补充协议。补充条款或补充协议以及本契约的附件均为本契约不可分割的部分。</p></div>
+        <div><p>&emsp;&emsp;第十一条:本契约自甲乙双方签订之日起生效。</p></div>
+        <div><p>&emsp;&emsp;第十二条:本契约一式二份, 甲乙双方各执一份。</p></div>
+        <div>
+            甲方签章:<div class="photo-add">
+                     <img class="item-image" src="http://7xn4mw.com1.z0.glb.clouddn.com/16-9-13/13827291.jpg" alt="">
+                     <input type="file" accept="image/*" name="uploader-input" class="uploader-file" id="upload">
+                     </div>
+            <div id="box"></div>
+        </div>
+        <div>乙方签章:<input type="text" id="CName" style="border:0px,0px,0px,1px" /></div>
+        <div>联系电话:<input type="tel" id="PlaneNumber" style="border:0px,0px,0px,1px" /></div>
+        <div>联系电话:<input type="tel" id="CName" style="border:0px,0px,0px,1px" /></div>
+        <div>签约日期:<input type="datetime" id="AWorkDate" style="border:0px,0px,0px,1px" /></div>
+        <div>签约日期:<input type="datetime" id="CWorkDate" style="border:0px,0px,0px,1px" /></div>
+        <div><input type="button" id="btn" value="确定" /></div>
+    </div>
+</body>
+</html>
+<script>
+    document.getElementById('upload').addEventListener('change', function (event) {
+        var $file = event.currentTarget;
+        var formData = new FormData();
+        var file = $file.files;
+        formData = new FormData();
+        formData.append(file[0].name, file[0]);
+        $.ajax({
+            url: '/Contract/AddCon',
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            contentType: false,
+            processData: false
+        })
+            .done(data => {
+                $('#box').append(`<div class="photo-item">
+            <img class="item-image" width="100%" height="100%" src="${data.url}"/>
+        </div>`);
+            })
+            .fail(data => {
+                console.log(data);
+            });
+    });
+    $("#btn").click(function () {
+        var AName = $("#AdminName").val();
+        var CName = $("#ClientName").val();
+        var HSId = $("#HSId").val();
+        var SPU = $("#SumPriceUp").val();
+        var SPD = $("#SumPriceDown").val();
+        var WD = $("#WorkDate").val();
+        var FPU = $("#FirstPriceUp").val();
+        var FPL = $("#FirstPriceLower").val();
+        var PN = $("#PlaneNumber").val();
+        var SP = $("#upload").val();
+        var CC = Date.now.toString();
+        $.ajax({
+            url: 'http://localhost:60345/API/Wangbaoyi/AddCon',
+            type: 'post',
+            data: { "AName": AName, "CName": CName, "HSId": HSId, "PriceUp": SPU, "Pricedown": SPD, "FirstBuyUp": FPU, "WorkDate": FPL, "PlaneNumber": PN, "SealPicture": SP, "FirstBuyDown": FPL, "ContractCode": CC },
+            dataType: 'json',
+            success: function (data) {
+                if (data > 0) {
+                    alert("添加成功");
+                }
+            }
+        });
+    });
+</script>
+

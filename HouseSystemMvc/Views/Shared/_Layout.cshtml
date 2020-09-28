@@ -46,6 +46,13 @@
                         <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY"><span class="l-line"></span>员工销售对比</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="iconfont">&#xe608;</i>合同信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' onclick="ContractList()" data-text="YYYY"><span class="l-line"></span>合同列表</a></dd>
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' onclick="AddContract()" data-text="YYYY"><span class="l-line"></span>添加合同</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
         <!--右侧内容-->
@@ -66,7 +73,7 @@
                 </ul>
             </div>
             <!--主体内容-->
-            <div class="main-layout-body">
+            <div class="main-layout-body" style="overflow-y:scroll;height:867px">
                 <!--tab 切换-->
                 <div class="layui-tab layui-tab-brief main-layout-tab" lay-filter="tab" lay-allowClose="true">
                     <ul class="layui-tab-title">
@@ -88,10 +95,17 @@
 <script src="~/admin/js/main.js"></script>
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
+    function AddContract() {
+        location.href = "http://localhost:5400/Contract/AddCon";
+    }
+    function ContractList() {
+        location.href = "http://localhost:5400/Contract/ShowConList";
+    }
     function Showlp() {
         location.href = "http://localhost:5400/HouseInfoContrller/ShouHouseInfo";
     }
     function Showhx() {
         location.href = "http://localhost:5400/HousType/ShowHousType";
     }
+
 </script>
