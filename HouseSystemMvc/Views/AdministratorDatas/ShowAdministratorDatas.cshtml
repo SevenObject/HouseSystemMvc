@@ -1,29 +1,28 @@
 ﻿
 @{
-    ViewData["Title"] = "ShowHousType";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "ShowAdministratorDatas";
 }
-
+<script src="~/My97DatePicker/My97DatePicker/calendar.js"></script>
+<script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 <div class="wrap-container clearfix">
     <div class="column-content-detail" style="top:10px">
         <div style="top:5px">
             <div style="margin-top:20px">
                 <span tyle="margin-left:10px;margin-top:-10px">
-                    <input type="text" id="cc" placeholder="请输入朝向">
+                    <input type="text" id="name" placeholder="请输入姓名">
                 </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span tyle="margin-left:10px;margin-top:-10px">
-                    <input type="text" id="qsjg" placeholder="请输入起始价格">万&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="rzrq" placeholder="请输入入职时间" onclick="WdatePicker()">
                 </span>
                 <span tyle="margin-left:10px;margin-top:-10px">
-                    <input type="text" id="zzjg" placeholder="请输入最终价格">万&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="lzrq" placeholder="请输入离职时间" onclick="WdatePicker()">
                 </span>
-                <select name="category" id="Select1" lay-verify="required" style="border:solid,1px">
-                    <option value="0">请选择楼盘</option>
-
-                </select>
+                <span tyle="margin-left:10px;margin-top:-10px">
+                    <input type="text" id="gh" placeholder="请输入工号">
+                </span>
                 <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Show()">搜索</button>
-                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Qing()">清空</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="qing()">清空</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -31,9 +30,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- 
-                 
-                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Addlp()" style="background:#ff0000">添加户型</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Addlp()" style="background:#ff0000">添加经纪人</button>
             </div>
         </div>
         <div class="layui-form" id="table-list" style="top:5px">
@@ -54,14 +51,14 @@
                 </colgroup>
                 <thead class="layui-table">
                     <tr style="color:#20bceb">
-                        <td class="hidden-xs">户型</td>
-                        <td class="hidden-xs">户型图片</td>
-                        <td class="hidden-xs">建筑面积</td>
-                        <td class="hidden-xs">总价</td>
-                        <td class="hidden-xs">朝向</td>
-                        <td class="hidden-xs">楼盘</td>
-                        <td class="hidden-xs">售楼处</td>
-                        <td class="hidden-xs">交房时间</td>
+                        <td class="hidden-xs">姓名</td>
+                        <td class="hidden-xs">照片</td>
+                        <td class="hidden-xs">身份证号</td>
+                        <td class="hidden-xs">入职时间</td>
+                        <td class="hidden-xs">手机号</td>
+                        <td class="hidden-xs">职位</td>
+                        <td class="hidden-xs">证件号</td>
+                        <td class="hidden-xs">所属公司</td>
                         <td class="hidden-xs">操作</td>
                     </tr>
                 </thead>
@@ -78,35 +75,14 @@
 </div>
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
-    function Addlp() {
-        location.href = "http://localhost:5400/HousType/AddHousType";
-    }
     $(document).ready(function () {
         Show();
-        $.ajax({
-            url: "http://localhost:60345/api/HouseInfoContr/SeleHouInfo",
-            type: "GET",
-            dataType: "json",
-            success:
-                function (res) {
-                    var op = "";
-                    $(res).each(function () {
-                        op += "<option value=" + this.htId + ">" + this.hName + "</option>";
-                    })
-                    $("#Select1").append(op);
-                }
-        })
     })
-    function Qing() {
-        var se = $("#Select1").val("");
-        var cx = $("#cc").val("");
-        var qs = $("#qsjg").val("");
- 
-    }
     var pageindex = 1;
-    var pagesize = 5;
+    var pagesize = 4;
     var pagecount = 1;
     var allcount = 1;
+
     function First() {
         pageindex = 1;
         Show();
@@ -131,13 +107,12 @@
         Show();
     }
     function Show() {
-        var se = $("#Select1").val();
-        var cx = $("#cc").val();
-        var qs = $("#qsjg").val();
-        var zz = $("#zzjg").val();
-
+        var na = $("#name").val();
+        var rz = $("#rzrq").val();
+        var lz = $("#lzrq").val();
+        var ghs = $("#gh").val();
         $.ajax({
-            url: "http://localhost:60345/api/HousTypeContr/GetHousTypes?pageindex=" + pageindex + "&pagesize=" + pagesize + "&htid=" + se + "&orien=" + cx + "&price=" + qs + "&prices=" + zz,
+            url: "http://localhost:60345/api/AdministratorDataContr/GetAdministratorDatas?name=" + na + "&begintime=" + rz + "&statime=" + lz + "&card=" + ghs + "&pageindex=" + pageindex + "&pagesize=" + pagesize,
             type: "GET",
             dataType: "json",
             success:
@@ -149,27 +124,33 @@
                     allcount = res.allCount;
                     var tg = "";
                     $("#rb").empty();
-                    $(res.housTypes).each(function () {
+                    $(res.administratorDatas).each(function () {
                         tg += "<tr>"
-                            + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.hId + ")'>" + this.hNames + "</a></td>"
-                            + "<td>" + "<img src = " + this.hoousePicture + " style='width: 110px; height: 100px'/>" + "</td>"
-                            + "<td>" + this.houseArea + "</td>"
-                            + "<td>" + this.priceCount + "</td>"
-                            + "<td>" + this.orientation + "</td>"
-                            + "<td>" + this.hName + "</td>"
-                            + "<td>" + this.sellHouse + "</td>"
-                            + "<td>" + this.handHouseTime + "</td>"
-                            + "<td><a style='cursor:pointer;color:#f02828' onclick='xg(" + this.hId + ")'>修改</a></td>"
+                            + "<td>" + this.aName + "</td>"
+                            + "<td>" + "<img src = " + this.aPicture + " style='width: 110px; height: 120px'/>" + "</td>"
+                            + "<td>" + this.card + "</td>"
+                            + "<td>" + this.beginTime + "</td>"
+                            + "<td>" + this.aPlaneNumber + "</td>"
+                            + "<td>" + this.aPosition + "</td>"
+                            + "<td>" + this.companyCard + "</td>"
+                            + "<td>" + this.company + "</td>"
+                            + "<td><a style='cursor: pointer;color:#f02828' onclick='xg(" + this.aId + ")'>修改</a></td>"
                             + "</tr>";
                     })
                     $("#rb").append(tg);
                 }
         })
     }
-    function ck(hId) {
-        location.href = "http://localhost:5400/HousType/SeleHousType?Ids=" + hId;
+    function xg(aId) {
+        location.href = "http://localhost:5400/AdministratorDatas/UpdateAdministratorDatas?Ids=" + aId;
     }
-    function xg(hId) {
-        location.href = "http://localhost:5400/HousType/UpdateHousType?Ids=" + hId;
+    function qing() {
+        var na = $("#name").val("");
+        var re = $("#rzrq").val("");
+        var z = $("#lzrq").val("");
+        var g = $("#gh").val("");
+    }
+    function Addlp() {
+        location.href = "http://localhost:5400/AdministratorDatas/AddAdministratorDatas";
     }
 </script>

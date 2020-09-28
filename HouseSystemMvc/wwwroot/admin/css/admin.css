@@ -1707,7 +1707,7 @@
   overflow: hidden;
 }
 .main-layout-tab {
-  margin-top: 0;
+    margin-top: -41px;
 }
 .main-layout-tab .layui-tab-title {
   border-bottom: 1px solid #f0f0f0;
@@ -1731,7 +1731,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  top: 41px;
+  top: 0px;
   padding: 0;
   z-index: 97;
   background: #f5f5f5;

@@ -27,8 +27,8 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" data-url="article-list.html" data-id='5' data-text="楼盘信息" onclick="Showlp()"><span class="l-line"></span>楼盘信息</a></dd>
                         <dd><a href="javascript:;" data-url="danye-list.html" data-id='6' data-text="户型信息" onclick="Showhx()"><span class="l-line"></span>户型信息</a></dd>
-                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="房型信息" onclick="AddStu()"><span class="l-line"></span>房型信息</a></dd>
-                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="XXXX" onclick="Licai()"><span class="l-line"></span>XXXX</a></dd>
+                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="房型信息" onclick="Shoufx()"><span class="l-line"></span>房型信息</a></dd>
+                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="经纪人信息" onclick="Showjj()"><span class="l-line"></span>经纪人信息</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
@@ -43,12 +43,9 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;"><i class="iconfont">&#xe608;</i>效绩图对比</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY" onclick="WollkerSale()"><span class="l-line"></span>员工销售对比</a></dd>
-                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY" onclick="HouseSale()"><span class="l-line"></span>员工季度销量统计</a></dd>
-                        <dd><a href="javascript:;" data-url="" data-id='9' data-text="XXXXX" onclick="HouseState()"><span class="l-line"></span>房态信息</a></dd>
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY"><span class="l-line"></span>员工销售对比</a></dd>
                     </dl>
                 </li>
-                
             </ul>
         </div>
         <!--右侧内容-->
@@ -72,12 +69,11 @@
             <div class="main-layout-body">
                 <!--tab 切换-->
                 <div class="layui-tab layui-tab-brief main-layout-tab" lay-filter="tab" lay-allowClose="true">
-                    <ul class="layui-tab-title">
-                    </ul>
+                     
                     <div class="layui-tab-content">
-                        
+                        @RenderBody()
                         <div class="layui-tab-item layui-show">
-                            @RenderBody()
+
                         </div>
                     </div>
                 </div>
@@ -97,13 +93,10 @@
     function Showhx() {
         location.href = "http://localhost:5400/HousType/ShowHousType";
     }
-    function WollkerSale() {
-        location.href = "http://localhost:5400/PictureTableHouseSale/WokkerSalePK";
+    function Shoufx() {
+        location.href = "http://localhost:5400/HouseShapeContrller/ShowHouseShape";
     }
-    function HouseSale() {
-        location.href = "http://localhost:5400/PictureTableHouseSale/HouseState";
-    }
-    function HouseState() {
-        location.href = "http://localhost:5400/PictureTableHouseSale/HouseStateYuanPicture";
+    function Showjj() {
+        location.href = "http://localhost:5400/AdministratorDatas/ShowAdministratorDatas";
     }
 </script>

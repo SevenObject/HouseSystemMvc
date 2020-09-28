@@ -1,7 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "ShowHousType";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "ShowHouseShape";
 }
 
 <div class="wrap-container clearfix">
@@ -12,15 +11,15 @@
                     <input type="text" id="cc" placeholder="请输入朝向">
                 </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span tyle="margin-left:10px;margin-top:-10px">
-                    <input type="text" id="qsjg" placeholder="请输入起始价格">万&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <span tyle="margin-left:10px;margin-top:-10px">
-                    <input type="text" id="zzjg" placeholder="请输入最终价格">万&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <select name="category" id="Select1" lay-verify="required" style="border:solid,1px">
+                <select name="category" id="lp" lay-verify="required" style="border:solid,1px">
                     <option value="0">请选择楼盘</option>
 
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="category" id="hx" lay-verify="required" style="border:solid,1px">
+                    <option value="0">请选择户型</option>
+                    <option value="1">3室2厅1卫1厨</option>
+                    <option value="2">3室2厅2卫1厨</option>
+                    <option value="3">4室2厅2卫1厨</option>
                 </select>
                 <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Show()">搜索</button>
                 <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Qing()">清空</button>
@@ -31,9 +30,17 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  
-                 
-                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Addlp()" style="background:#ff0000">添加户型</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="search" onclick="Addfj()" style="background:#ff0000">添加房间</button>
             </div>
         </div>
         <div class="layui-form" id="table-list" style="top:5px">
@@ -54,14 +61,13 @@
                 </colgroup>
                 <thead class="layui-table">
                     <tr style="color:#20bceb">
-                        <td class="hidden-xs">户型</td>
-                        <td class="hidden-xs">户型图片</td>
-                        <td class="hidden-xs">建筑面积</td>
-                        <td class="hidden-xs">总价</td>
+                        <td class="hidden-xs">房间号</td>
+                        <td class="hidden-xs">房间图片</td>
                         <td class="hidden-xs">朝向</td>
+                        <td class="hidden-xs">均价</td>
+                        <td class="hidden-xs">房间状态</td>
+                        <td class="hidden-xs">户型</td>
                         <td class="hidden-xs">楼盘</td>
-                        <td class="hidden-xs">售楼处</td>
-                        <td class="hidden-xs">交房时间</td>
                         <td class="hidden-xs">操作</td>
                     </tr>
                 </thead>
@@ -76,10 +82,12 @@
         </div>
     </div>
 </div>
+<a onclick="tk()" style="cursor:pointer"></a>
 <script src="~/jquery-3.3.1.min.js"></script>
+
 <script>
-    function Addlp() {
-        location.href = "http://localhost:5400/HousType/AddHousType";
+    function Addfj() {
+        location.href = "http://localhost:5400/HouseShapeContrller/AddHouseShape";
     }
     $(document).ready(function () {
         Show();
@@ -93,16 +101,11 @@
                     $(res).each(function () {
                         op += "<option value=" + this.htId + ">" + this.hName + "</option>";
                     })
-                    $("#Select1").append(op);
+                    $("#lp").append(op);
                 }
         })
+        
     })
-    function Qing() {
-        var se = $("#Select1").val("");
-        var cx = $("#cc").val("");
-        var qs = $("#qsjg").val("");
- 
-    }
     var pageindex = 1;
     var pagesize = 5;
     var pagecount = 1;
@@ -131,13 +134,11 @@
         Show();
     }
     function Show() {
-        var se = $("#Select1").val();
-        var cx = $("#cc").val();
-        var qs = $("#qsjg").val();
-        var zz = $("#zzjg").val();
-
+        var ccs = $("#cc").val();
+        var hxs = $("#hx").val();
+        var lps = $("#lp").val();
         $.ajax({
-            url: "http://localhost:60345/api/HousTypeContr/GetHousTypes?pageindex=" + pageindex + "&pagesize=" + pagesize + "&htid=" + se + "&orien=" + cx + "&price=" + qs + "&prices=" + zz,
+            url: "http://localhost:60345/api/HouseShapeContr/GetHouseShapes?tation=" + ccs + "&hid=" + hxs + "&htid=" + lps + "&pageindex=" + pageindex + "&pagesize=" + pagesize,
             type: "GET",
             dataType: "json",
             success:
@@ -149,27 +150,24 @@
                     allcount = res.allCount;
                     var tg = "";
                     $("#rb").empty();
-                    $(res.housTypes).each(function () {
+                    $(res.houseShapes).each(function () {
                         tg += "<tr>"
-                            + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.hId + ")'>" + this.hNames + "</a></td>"
-                            + "<td>" + "<img src = " + this.hoousePicture + " style='width: 110px; height: 100px'/>" + "</td>"
-                            + "<td>" + this.houseArea + "</td>"
-                            + "<td>" + this.priceCount + "</td>"
+                            + "<td>" + this.hNumber + "</td>"
+                            + "<td>" + this.housePicture + "</td>"
                             + "<td>" + this.orientation + "</td>"
+                            + "<td>" + this.averagePrice + "元/㎡</td>"
+                            + "<td style='color: red'>" + (this.houseState == 0 ? "在售" : this.houseState == 1 ? "已售" : "预定") + "</td>"
+                            //+ "<td style='color: red'><a onclick='tk(" + this.hsId + ")' style='cursor: pointer;color: red'>" + (this.houseState == 2 ? "退房" : this.houseState == 0?"预定":"") + "</a></td>"
+                            + "<td>" + this.hNames + "</td>"
                             + "<td>" + this.hName + "</td>"
-                            + "<td>" + this.sellHouse + "</td>"
-                            + "<td>" + this.handHouseTime + "</td>"
-                            + "<td><a style='cursor:pointer;color:#f02828' onclick='xg(" + this.hId + ")'>修改</a></td>"
+                            + "<td><a style='cursor: pointer;color:#f02828' onclick='xg(" + this.hsId + ")'>修改</a></td>"
                             + "</tr>";
                     })
                     $("#rb").append(tg);
                 }
         })
     }
-    function ck(hId) {
-        location.href = "http://localhost:5400/HousType/SeleHousType?Ids=" + hId;
-    }
-    function xg(hId) {
-        location.href = "http://localhost:5400/HousType/UpdateHousType?Ids=" + hId;
+    function xg(hsId) {
+        location.href = "http://localhost:5400/HouseShapeContrller/UpdateHouseShape?Ids=" + hsId;
     }
 </script>

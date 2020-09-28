@@ -12,6 +12,15 @@ namespace HouseSystemMvc.Controllers
         {
             return View(); 
         }
+        public IActionResult UpdateHouseInfo(int ids)
+        {
+            ViewBag.ids = ids;
+            return View();
+        }
+        public IActionResult AddHouseInfo()
+        {
+            return View();
+        }
         public IActionResult SeleHoutypes(int ids)
         {
             ViewBag.ss = ids;
