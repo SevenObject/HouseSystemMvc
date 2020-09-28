@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewData["Title"] = "UpdateHouseShape";
+}
+
+<input type="hidden" value="@ViewBag.ss" id="upid" />
+<table class="table">
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">房间号：</label>
+        <div class="layui-input-block">
+            <input type="text" id="fjh" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+            <span style="color:red">*不可更改*</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">房间图片：</label>
+        <div class="layui-input-block">
+            <div id="pic" style='width: 80px; height: 80px'></div>
+            <span style="color:red">*不可更改*</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">朝向：</label>
+        <div class="layui-input-block">
+            <input type="text" id="cx" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+            <span style="color:red">*不可更改*</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%" readonly>
+        <label class="layui-form-label">均价：</label>
+        <div class="layui-input-block">
+            <input type="text" id="jj" required lay-verify="required" autocomplete="off" class="layui-input ">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">房间状态：</label>
+        <div class="layui-input-block">
+            <input type="text" id="fjzt" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">户型：</label>
+        <div class="layui-input-block">
+            <select id="Select1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择楼盘" ;>
+                <option value="0">请选择户型</option>
+                <option value="1">3室2厅1卫1厨</option>
+                <option value="13">3室2厅2卫1厨</option>
+                <option value="20">4室2厅2卫1厨</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">楼盘：</label>
+        <div class="layui-input-block">
+            <select id="lp" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择楼盘" ;>
+                <option>请选择楼盘</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
+        <label class="layui-form-label">所属经纪人：</label>
+        <div class="layui-input-block">
+            <select id="jjr" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择楼盘" ;>
+                <option>请选择经纪人</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="upAdds()">保存修改</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="quxiao()">取消修改</button>
+        </div>
+    </div>
+</table>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var aids = $("#upid").val();
+        $.ajax({
+            url: "http://localhost:60345/api/HouseShapeContr/SeleHou?ids=" + aids,
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    console.log(res);
+                    $(res).each(function () {
+                        $("#fjh").val(this.hNumber);
+                        $("#pic").val(this.housePicture);
+                        $("#cx").val(this.orientation);
+                        $("#jj").val(this.averagePrice);
+                        if (this.houseState == 0) {
+                            $("#fjzt").val("在售");
+                        }
+                        if (this.houseState == 1) {
+                            $("#fjzt").val("已售");
+                        }
+                        if (this.houseState == 2) {
+                            $("#fjzt").val("预定");
+                        }
+                    })
+                    
+                }
+        })
+        $.ajax({
+            url: "http://localhost:60345/api/HouseInfoContr/SeleHouInfo",
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    var op = "";
+                    $(res).each(function () {
+                        op += "<option value=" + this.htId + ">" + this.hName + "</option>";
+                    })
+                    $("#lp").append(op);
+                }
+        })
+        $.ajax({
+            url: "http://localhost:60345/api/AdministratorDataContr/SAdministr",
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    var op = "";
+                    $(res).each(function () {
+                        op += "<option value=" + this.aId + ">" + this.aName + "</option>";
+                    })
+                    $("#jjr").append(op);
+                }
+        })
+    })
+</script>

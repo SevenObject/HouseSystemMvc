@@ -6,22 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseSystemMvc.Controllers
 {
-    public class HousTypeController : Controller
+    public class HouseShapeContrller : Controller
     {
-        public IActionResult ShowHousType()
+        public IActionResult ShowHouseShape()
         {
             return View();
         }
-        public IActionResult AddHousType()
+        public IActionResult AddHouseShape()
         {
             return View();
         }
-        public IActionResult UpdateHousType(int ids)
-        {
-            ViewBag.ss = ids;
-            return View();
-        }
-        public IActionResult SeleHousType(int ids)
+        public IActionResult UpdateHouseShape(int ids)
         {
             ViewBag.ss = ids;
             return View();

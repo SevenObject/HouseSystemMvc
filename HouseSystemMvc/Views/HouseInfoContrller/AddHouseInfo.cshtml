@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "AddHouseInfo";
+}
+<script src="~/My97DatePicker/My97DatePicker/calendar.js"></script>
+<script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" href="/static/build/layui.css" media="all">
+<table class="table">
+
+    <div class="layui-form-item" style="margin-bottom:8px;width: 90%">
+        <label class="layui-form-label">楼盘名称：</label>
+        <div class="layui-input-block">
+            <input type="text" id="lpmc" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入楼盘名称；如：东滩云墅" ;>
+
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">图像上传：</label>
+        <div class="layui-input-block">
+            <form method="post" enctype="multipart/form-data" id="form">
+                <input type="file" name="file" id="file" multiple="multiple" />
+            </form>
+        </div>
+    </div>
+    @*<div class="layui-upload" style="margin-left:20px">
+            <button type="button" class="layui-btn" id="test2">多图片上传</button>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                预览图：
+                <div class="layui-upload-list" id="demo2"></div>
+            </blockquote>
+        </div>*@
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">开盘日期：</label>
+        <div class="layui-input-block">
+            <input type="text" id="kprq" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入开盘日期" onclick="WdatePicker()">
+        </div>
+
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">项目地址：</label>
+        <div class="layui-input-block">
+            <input type="text" id="xmdz" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入项目地址；如：浦东-惠南上海市浦东新区项文路333号">
+        </div>
+
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">售楼处：</label>
+        <div class="layui-input-block">
+            <input type="text" id="slc" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入售楼处；如：上海市浦东新区项文路333号" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">开发商：</label>
+        <div class="layui-input-block">
+            <input type="text" id="kfs" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入开发商；如：上海三菱科技创业有限公司" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">建筑面积：</label>
+        <div class="layui-input-block">
+            <input type="text" id="jzmj" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入建筑面积;如：310000平" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">交房时间：</label>
+        <div class="layui-input-block">
+            <input type="text" id="jfsj" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入交房时间" onclick="WdatePicker()">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">产权年限：</label>
+        <div class="layui-input-block">
+            <input type="text" id="cqnx" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入产权年限；如：70年" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">建筑类别：</label>
+        <div class="layui-input-block">
+            <input type="text" id="jzlb" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入建筑类别；如：板楼、小高层" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">容积率：</label>
+        <div class="layui-input-block">
+            <input type="text" id="rjl" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入容积率；如：1.4" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">绿化率：</label>
+        <div class="layui-input-block">
+            <input type="text" id="lhl" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入绿化率；如：35%" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom: 8px; width: 90%">
+        <label class="layui-form-label">周边规划：</label>
+        <div class="layui-input-block">
+            <textarea type="text" id="zbgh" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入周边规划；如：交通：南亭公路，轨交5号线奉浦大道站，闵浦三桥（规划中）" ></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="addst()">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="cong()">重置</button>
+        </div>
+    </div>
+
+</table>
+<script src="~/jquery-3.3.1.min.js"></script>
+<script src="~/layui.js"></script>
+
+<script>
+
+    function addst() {
+        $.ajax({
+            url: "",
+            type: "",
+            dataType: "",
+            data: {},
+            success:
+                function (d) {
+
+                }
+        })
+    }
+</script>
+
+

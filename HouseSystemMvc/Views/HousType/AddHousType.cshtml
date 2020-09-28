@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "AddHousType";
+}
+
+<table class="table">
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">户型：</label>
+        <div class="layui-input-block">
+            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入户型；如：3室2厅2卫1厨" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">户型面积：</label>
+        <div class="layui-input-block">
+            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入户型面积；如：140㎡" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">总价：</label>
+        <div class="layui-input-block">
+            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入总价；如：448" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">图像上传：</label>
+        <div class="layui-input-block">
+            <form method="post" enctype="multipart/form-data" id="form">
+                <input type="file" name="file" id="file" multiple="multiple" />
+            </form>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">朝向：</label>
+        <div class="layui-input-block">
+            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入朝向；如：南" ;>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">楼盘：</label>
+        <div class="layui-input-block">
+            <select id="Select1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择楼盘" ;>
+                <option>请选择楼盘</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="addst()">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="cong()">重置</button>
+        </div>
+    </div>
+</table>
+<script src="~/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+         
+        $.ajax({
+            url: "http://localhost:60345/api/HouseInfoContr/SeleHouInfo",
+            type: "GET",
+            dataType: "json",
+            success:
+                function (res) {
+                    var op = "";
+                    $(res).each(function () {
+                        op += "<option value=" + this.htId + ">" + this.hName + "</option>";
+                    })
+                    $("#Select1").append(op);
+                }
+        })
+    })
+    
+    function addst() {///保存
+        $.ajax({
+            url: "",
+            type: "",
+            dataType: "",
+            data: {},
+            success:
+                function (d) {
+
+                }
+        })
+    }
+</script>
