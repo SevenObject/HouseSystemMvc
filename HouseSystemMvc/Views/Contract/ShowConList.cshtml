@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewData["Title"] = "ShowConList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ShowConList</h1>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowCon</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <input id="checkValue" name="checkValue" value="" type="hidden" />
+    <input id="btnDel" type="button" value="删除" />
+    <table>
+        <thead>
+            <tr>
+                <th><input id="checkAll" name="checked" onclick="swapCheck()" type="checkbox" />全选/反选</th>
+                <th>经理人</th>
+                <th>顾客</th>
+                <th>房产编号</th>
+                <th>合同单号</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tb">
+
+        </tbody>
+    </table>
+    <div class="modal fade" id="MyModel" data-remote="/HouseSale/ShowCon"></div>
+    <div>
+        <input id="btnFirst" type="button" value="首页" onclick="ShowPage('First')" />
+        <input id="btnPro" type="button" value="上一页" onclick="ShowPage('Pro')" />
+        第<label id="pageIndex">1</label>页/共<label id="TotalPage">10</label>页/每页<label id="pageSize">2</label>条/共<label id="TotalCount">20</label>条
+        <input id="btnNext" type="button" value="下一页" onclick="ShowPage('Next')" />
+        <input id="btnLast" type="button" value="尾页" onclick="ShowPage('Last')" />
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        ShowConPage();
+    });
+    function ShowConPage() {
+        var contractCode = $("#ContractCode").val();
+        $.ajax({
+            url: 'http://localhost:60345/API/Wangbaoyi/ShowConList',
+            type: 'get',
+            data: { "ContractCode": contractCode },
+
+            dataType: 'json',
+            success: function (data) {
+                $("#totalre").text(data.results[0].TotalCount);
+                $("tb").empty();
+                $(data.data).each(function () {
+                    var str = '<tr>'
+                        + '<th><input id="checkId" value="' + this.CId + '" onchange="Getcheckbox()" name="checkId" type="checkbox" /></th >'
+                        + '<th>' + this.AName+'</th>'
+                        + '<th>' + this.CName + '</th>'
+                        + '<th>' + this.HSId + '</th>'
+                        + '<th><lable id=' + this.ContractCode + '>' + this.ContractCode + '</lable></th>'
+                        + '<th><input id="Button1" type="button" value="查看" /></th>'
+                        + '</tr>';
+                })
+
+            }
+
+        })
+    }
+    ///模态框
+    $("#Button1").click(function (e) {
+        var $that = $(this);
+        e.preventDefault();
+        var url = $that.data('remote') || $that.attr('href');
+        $("#MyModel").modal();
+        $("#MyModel").load(url);
+        document.cookie = $("#ContractCode").val();
+    });
+    ///全选/反选
+    var isCheakAll = false;
+    function swapCheck() {
+        if (isCheakAll) {
+            $("input='checkbox'").each(function () {
+                this.checked = false;
+                Getcheckbox();
+            });
+            isCheakAll = false;
+        } else {
+            $("input='checkbox'").each(function () {
+                this.checked = true;
+                Getcheckbox();
+            });
+            isCheakAll = true;
+        }
+    }
+    function Getcheckbox() {
+        var str = document.getElementsByName("checkId");
+        var objarray = str.length;
+        var chestr = "";
+        for (i = 0; i < objarray; i++) {
+            if (str[i].checked == true) {
+                chestr += str[i].value + ":";
+            }
+        }
+        $("#checkValue").val() = chestr;
+    }
+    $(function () {
+        $("#checkAll").change(function () {
+            $("#tb:checkbox").prop("checked", this.checked);
+        });
+    });
+    $("#checkAll").click(function () {
+        var id = [];
+        $("#tb:checkbox:checked").each(function () {
+            id.push($(this).val());
+        });
+        $.ajax({
+            url: "http://localhost:60345/API/Wangbaoyi/DelAll",
+            type: 'post',
+            data: { id: id.join(",") },
+            dataType: 'json',
+            success: function (data) {
+                if (data.data > 0) {
+                    alert("删除成功");
+                    $("#tb:checkbox:checked").parent().parent().remove();
+                    location.reload();
+                }
+            }
+        })
+    })
+    function ShowPager(opname) {
+        var pIndex = $("#pageIndex").text();
+        var tCount = $("#totalre").text();
+        $("#totalPage").text(tCount);
+        switch (opname) {
+            case "First":
+                pIndex = 1;
+                break;
+            case "Prv":
+                if (parseInt(pIndex) - 1 > 0) {
+                    pIndex--;
+                }
+                break;
+            case "Next":
+                if (parseInt(pIndex) + 1 <= tCount) {
+                    pIndex++;
+                }
+                break;
+            case "Last":
+                pIndex = tCount;
+                break;
+        }
+        $("#pageIndex").text(pIndex);
+        Show();
+    }
+</script>
+
