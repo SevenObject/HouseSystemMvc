@@ -66,7 +66,7 @@
                         <a href="javascript:;" data-url="admin-info.html" data-id='5' data-text="个人信息">
                             <img src="~/5c3562592af63421.jpeg!200x200.jpg" style="width:61px;height:61px" id="imgs" />
                             &nbsp;当前用户:
-                            <input type="reset" style="width:80px;color:#ff0000;height:40px;border:0px;background-color:#FFFFFF" readonly id="Tes" />
+                            <input id="UserName" disabled value="" style="border:0px" />
                         </a>
                     </li>
                     <li class="layui-nav-item"><a href="javascript:;" onclick="loca()">退出</a></li>
@@ -94,6 +94,8 @@
 <script src="~/admin/js/main.js"></script>
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
+    var uname = sessionStorage["Uname"];
+    document.getElementById("UserName").value = uname;
     function AddContract() {
         location.href = "http://localhost:5400/Contract/AddCon";
     }

@@ -1,11 +1,8 @@
 ﻿
 @{
-    ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -64,14 +61,14 @@
                     <div class="btn" id="btn1">&gt;&gt;</div>
                 </div>
             </li>
-            <li><input id="Button1" type="button" style="width:100%" disabled value="登录" onclick="Login()" /></li>
+            <li><input id="Button1" type="button" style="width:100%"  value="登录" onclick="Login()" /></li>
         </ul>
     </div>
 </body>
 </html>
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
-    
+    $("#Button1").attr({ "disabled": "disabled" });
     //一、定义一个获取DOM元素的方法
     var $ = function (selector) {
         return document.querySelector(selector);
@@ -123,9 +120,10 @@
                 //3.成功解锁后的回调函数
                 setTimeout(function () {
                     alert('解锁成功！');
-                    $("#Button1").attr("disabled", false)
+                    $("#Button1").attr("disabled", false);
                 }, 100);
             }
+            
         }
         //四、给文档注册鼠标松开事件
         document.onmouseup = function (e) {
@@ -142,6 +140,7 @@
             //只要鼠标松开了，说明此时不需要拖动滑块了，那么就清除鼠标移动和松开事件。
             document.onmousemove = null;
             document.onmouseup = null;
+            
         }
     }
     function Login() {
@@ -159,6 +158,8 @@
             success: function (data) {
                 if (data > 0) {
                     alert("登陆成功");
+                    var Uname = name
+                    sessionStorage["Uname"] = Uname;
                 }
             }
         })
