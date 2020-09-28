@@ -27,23 +27,23 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" data-url="article-list.html" data-id='5' data-text="楼盘信息" onclick="Showlp()"><span class="l-line"></span>楼盘信息</a></dd>
                         <dd><a href="javascript:;" data-url="danye-list.html" data-id='6' data-text="户型信息" onclick="Showhx()"><span class="l-line"></span>户型信息</a></dd>
-                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="房型信息" onclick="Shoufx()"><span class="l-line"></span>房型信息</a></dd>
-                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="经纪人信息" onclick="Showjj()"><span class="l-line"></span>经纪人信息</a></dd>
+                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="房型信息" onclick="Shouhousetype()"><span class="l-line"></span>房型信息</a></dd>
+                        <dd><a href="javascript:;" data-url="danye-list.html" data-id='9' data-text="经纪人信息" onclick="AdminIstratoData()"><span class="l-line"></span>经纪人信息</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;"><i class="iconfont">&#xe608;</i>房产销售管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="/Stude/Order" data-url="" data-id='9' data-text="XXXXX"><span class="l-line"></span>房产销售</a></dd>
-                        <dd><a href="/Stude/AddLoas" data-url="" data-id='9' data-text="XXXXX"><span class="l-line"></span>房态统计图</a></dd>
-                        <dd><a href="/Order/Order" data-url="" data-id='9' data-text="XXXXX"><span class="l-line"></span>XXXX</a></dd>
-                        <dd><a href="/Stude/GetDaikuans" data-url="" data-id='9' data-text="XXXXX"><span class="l-line"></span>XXXX</a></dd>
+                        <dd><a href="javascript:;" data-url="" data-id='9' data-text="XXXXX" onclick="HouseSale()"><span class="l-line"></span>房产销售</a></dd>
+                        <dd><a href="javascript:;" data-url="" data-id='9' data-text="XXXXX" onclick="CloseHouse()"><span class="l-line"></span>房态统计图</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;"><i class="iconfont">&#xe608;</i>效绩图对比</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY"><span class="l-line"></span>员工销售对比</a></dd>
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY" onclick="WokkerSalePK()"><span class="l-line"></span>员工销售统计</a></dd>
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY" onclick="HouseState()"><span class="l-line"></span>公司季度统计</a></dd>
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' data-text="YYYY" onclick="HouseStateYuanPicture()"><span class="l-line"></span>房产销售模块</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
@@ -94,18 +94,40 @@
 <script src="~/admin/js/main.js"></script>
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
-    var uname = sessionStorage["Uname"];
-    document.getElementById("UserName").value = uname;
     function AddContract() {
         location.href = "http://localhost:5400/Contract/AddCon";
     }
-    function ContractList() {
-        location.href = "http://localhost:5400/Contract/ShowConList";
+    function AdminIstratoData() {
+        location.href = "http://localhost:5400/AdministratorDatas/ShowAdministratorDatas";
     }
     function Showlp() {
         location.href = "http://localhost:5400/HouseInfoContrller/ShouHouseInfo";
     }
     function Showhx() {
         location.href = "http://localhost:5400/HousType/ShowHousType";
+    }
+    function HouseSale() {
+        location.href = "http://localhost:5400/HouseSaleOrMrLi/Indexs";
+    }
+    function CloseHouse() {
+        location.href = "http://localhost:5400/HouseSaleOrMrLi/Indexs2";
+    }
+    function WokkerSalePK() {
+        location.href = "http://localhost:5400/PictureTableHouseSale/WokkerSalePK";
+    }
+    function HouseState() {
+        location.href = "http://localhost:5400/PictureTableHouseSale/HouseState";
+    }
+    function HouseStateYuanPicture() {
+        location.href = "http://localhost:5400/PictureTableHouseSale/HouseStateYuanPicture";
+    }
+    function ContractList() {
+        location.href = "http://localhost:5400/ContractController/ShowConList";
+    }
+    function AddContract() {
+        location.href = "http://localhost:5400/ContractController/AddCon";
+    }
+    function loca() {
+        location.href = "http://localhost:5400/ContractController/Login";
     }
 </script>

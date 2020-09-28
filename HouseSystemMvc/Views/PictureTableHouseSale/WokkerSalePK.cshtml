@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "WokkerSalePK";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+        
+    <div>
+        <div class="hid"></div>
+        
+        <select style="width:220px;height:30px;margin-left:150px;margin-top:45px;">
+            <option value="第一季度" onclick="One()">第一季度</option>
+            <option value="第二季度" onclick="location.href='/PictureTableHouseSale/HouseState'">第二季度</option>
+            <option value="第三季度" onclick="location.href='//'">第三季度</option>
+            <option value="第四季度" onclick="location.href='//'">第四季度</option>
+        </select>
+        <input id="Count0" type="hidden" value="1" />
+        <input id="Name0" type="hidden" value="0" />
+        <input id="Count1" type="hidden" value="1" />
+        <input id="Name1" type="hidden" value="0" />
+        <input id="Count2" type="hidden" value="1" />
+        <input id="Name2" type="hidden" value="0" />
+        <input id="Count3" type="hidden" value="1" />
+        <input id="Name3" type="hidden" value="0" />
+        <input id="Count4" type="hidden" value="1" />
+        <input id="Name4" type="hidden" value="0" />
+        <div id="container" style="height:500px;width:100%;background-color:white;">
+
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+            <script type="text/javascript">
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                option = {
+                    dataset: {
+                        source: [
+
+
+                            [1, '经纪人:李永豪', 1],
+                            [2, '经纪人:赵万杰', 2],
+                            [2, '经纪人:祝衍生', 3],
+                            [3, '经纪人:王宝艺', 4],
+                            [4, '经纪人:冯路顺', 5],
+
+                        ]
+                    },
+                    grid: { containLabel: true },
+                    xAxis: { name: '员工效绩对比' },
+                    yAxis: { type: 'category' },
+                    visualMap: {
+                        orient: 'horizontal',
+                        left: 'center',
+                        min: 0,
+                        max: 6,
+                        text: ['▼', ' 效绩-->'],
+                        // Map the score column to color
+                        dimension: 0,
+                        inRange: {
+                            color: ['#D7DA8B', '#E15457']
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            encode: {
+                                // Map the "amount" column to X axis.
+                                x: 'amount',
+                                // Map the "product" column to Y axis
+                                y: 'product'
+                            }
+                        }
+                    ]
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            </script>
+
+        </div>
+    </div>
+
+<script src="~/jquery-3.3.1.min.js"></script>
+<script>
+    ListNumber();
+    function ListNumber() {
+
+        $.ajax({
+            url: "http://localhost:60345/api/PictureTables/WoleerSaleTable",
+            type: 'GET',
+            dataType: 'json',
+            success: function (d) {
+
+                $(".hid").empty();
+                $(d).each(function () {
+                    var s = '<span>' + this.counts + '</span>' +
+                        '<span>' + this.aNames + '</span>'
+
+
+
+                })
+                Count0 = $("#Count0").val(d[0].counts);
+                Name0 = $("#Name0").val(d[0].aNames);
+                Count1 = $("#Count1").val(d[1].counts);
+                Name1 = $("#Name1").val(d[1].aNames);
+                Count2 = $("#Count2").val(d[2].counts);
+                Name2 = $("#Name2").val(d[2].aNames);
+                Count3 = $("#Count3").val(d[3].counts);
+                Name3 = $("#Name3").val(d[3].aNames);
+                Count4 = $("#Count4").val(d[4].counts);
+                Name4 = $("#Name4").val(d[4].aNames);
+                //sessionStorage["Count"] = this.counts;
+                //sessionStorage["Names"] = this.aNames;
+
+            }
+        })
+    }
+    function One() {
+        location.href = '/PictureTableHouseSale/HouseState';
+    }
+    function picturetable() {
+         Count00 = Count0;
+         Name00 = Name0;
+         Count11 = Count1;
+         Name11 = Name1;
+         Count22 = Count2;
+         Name22 = Name2;
+         Count33 = Count3;
+         Name33 = Name3;
+    }
+</script>

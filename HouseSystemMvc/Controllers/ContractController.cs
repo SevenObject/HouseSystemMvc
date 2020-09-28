@@ -21,8 +21,8 @@ namespace HouseSystemMvc.Controllers
         {
             return View();
         }
-        public IActionResult ShowCon()
-        {
+        public IActionResult ShowCon() 
+        {    
             return PartialView();
         }
         public IActionResult AddCon()

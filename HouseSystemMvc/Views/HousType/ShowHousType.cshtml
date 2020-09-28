@@ -150,6 +150,7 @@
                     var tg = "";
                     $("#rb").empty();
                     $(res.housTypes).each(function () {
+                        var handHouseTime = String(this.handHouseTime).substring(0,10);
                         tg += "<tr>"
                             + "<td><a style='cursor: pointer' title='查看户型' onclick='ck(" + this.hId + ")'>" + this.hNames + "</a></td>"
                             + "<td>" + "<img src = " + this.hoousePicture + " style='width: 110px; height: 100px'/>" + "</td>"
@@ -158,7 +159,7 @@
                             + "<td>" + this.orientation + "</td>"
                             + "<td>" + this.hName + "</td>"
                             + "<td>" + this.sellHouse + "</td>"
-                            + "<td>" + this.handHouseTime + "</td>"
+                            + "<td>" + handHouseTime + "</td>"
                             + "<td><a style='cursor:pointer;color:#f02828' onclick='xg(" + this.hId + ")'>修改</a></td>"
                             + "</tr>";
                     })
