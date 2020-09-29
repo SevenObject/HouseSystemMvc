@@ -46,7 +46,7 @@ namespace HouseSystemMvc
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ContractController1}/{action=Login}/{id?}");
+                    pattern: "{controller=HouseInfoContrller}/{action=ShouHouseInfo}/{id?}");
             });
         }
     }
