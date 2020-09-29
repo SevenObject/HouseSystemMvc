@@ -8,19 +8,19 @@
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">经纪人姓名：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " >
+            <input type="text" id="name" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入经纪人姓名" >
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">经纪人手机号：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " >
+            <input type="text" id="phone" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入手机号">
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">经纪人身份证件号：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " >
+            <input type="text" id="sfzh" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入身份证件号">
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
@@ -34,31 +34,31 @@
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">入职时间：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " onclick="WdatePicker()">
+            <input type="text" id="rzsj" required lay-verify="required" autocomplete="off" class="layui-input " onclick="WdatePicker()" placeholder="请输入入职时间">
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">经纪人职位：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " >
+            <input type="text" id="zw" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入经纪人职位">
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">经纪人证件号：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " >
+            <input type="text" id="zjh" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入经纪人证件号">
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">所属公司：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " >
+            <input type="text" id="ssgs" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入所属公司">
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:15px;width: 90%">
         <label class="layui-form-label">登录密码：</label>
         <div class="layui-input-block">
-            <input type="password" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="8--16位" ;>
+            <input type="password" id="pwd" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入密码：8--16位" ;>
         </div>
     </div>
     <div class="layui-form-item">
@@ -71,6 +71,41 @@
 <script src="~/jquery-3.3.1.min.js"></script>
 <script>
     function addst() {
+        var name = $("#name").val();
+        if (name == "") {
+            alert("请输入经纪人姓名");
+            return;
+        }
+        var ph = $("#phone").val();
+        if (ph == "") {
+            alert("请输入手机号");
+            return;
+        }
+        var sf = $("#sfzh").val();
+        if (sf == "") {
+            alert("请输入身份证");
+            return;
+        }
+        var sj = $("#rzsj").val();
+        if (sj == "") {
+            alert("请输入入职时间");
+            return;
+        }
+        var zw = $("#zw").val();
+        if (zw == "") {
+            alert("请输入经纪人职位");
+            return;
+        }
+        var gs = $("#ssgs").val();
+        if (gs == "") {
+            alert("请输入经纪人所属公司");
+            return;
+        }
+        var pw = $("#pwd").val();
+        if (pw == "") {
+            alert("请输入登录密码");
+            return;
+        }
         $.ajax({
             url: "",
             type: "",

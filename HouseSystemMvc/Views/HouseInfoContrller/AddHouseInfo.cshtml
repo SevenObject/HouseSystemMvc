@@ -112,6 +112,71 @@
 <script>
 
     function addst() {
+        var lp = $("#lpmc").val();
+        if (lp == "") {
+            alert("请输入楼盘名称!");
+            return;
+        }
+        var pic = $("#form").val();
+        if (pic=="") {
+            alert("请添加图片!");
+            return;
+        }
+        var kp = $("#kprq").val();
+        if (kp == "") {
+            alert("请输入开盘日期!");
+            return;
+        }
+        var xm = $("#xmdz").val();
+        if (xm == "") {
+            alert("请输入项目地址!");
+            return;
+        }
+        var sl = $("#slc").val();
+        if (sl == "") {
+            alert("请输入售楼处!");
+            return;
+        }
+        var kfs = $("#kfs").val();
+        if (kfs=="") {
+            alert("请输入开发商!");
+            return;
+        }
+        var jz = $("#jzmj").val();
+        if (jz=="") {
+            alert("请输入建筑面积!");
+            return;
+        }
+        var jf = $("#jfsj").val();
+        if (jf=="") {
+            alert("请输入交房时间!");
+            return;
+        }
+        var cq = $("#cqnx").val();
+        if (cq=="") {
+            alert("请输入产权年限!");
+            return;
+        }
+        var jz = $("#jzlb").val();
+        if (jz=="") {
+            alert("请输入建筑类别!");
+            return;
+        }
+        var rj = $("#rjl").val();
+        if (rj == "") {
+            alert("请输入容积率!");
+            return;
+        }
+        var lh = $("#lhl").val();
+        if (lh=="") {
+            alert("请输入绿化率!");
+            return;
+        }
+        var zb = $("#zbgh").val();
+        if (zb=="") {
+            alert("请输入周边规划!");
+            return;
+        }
         $.ajax({
             url: "",
             type: "",

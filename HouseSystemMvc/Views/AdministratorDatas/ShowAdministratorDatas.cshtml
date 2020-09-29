@@ -66,6 +66,7 @@
             </table>
         </div>
         <div style="margin-left:450px">
+            <span style="font-size:18px">当前第<a id="nowpage"></a>页</span>/<span style="font-size:18px">共<a id="gong"></a>条</span>
             <input type="button" class="layui-btn" onclick="First()" value="首页" />
             <input type="button" class="layui-btn" onclick="Pre()" value="上一页" />
             <input type="button" class="layui-btn" onclick="Next()" value="下一页" />
@@ -122,6 +123,8 @@
                     pagesize = res.pageSize;
                     pagecount = res.pageCount;
                     allcount = res.allCount;
+                    $("#nowpage").text(pageindex);
+                    $("#gong").text(allcount);
                     var tg = "";
                     $("#rb").empty();
                     $(res.administratorDatas).each(function () {
