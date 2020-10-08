@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "AddClientData";
+}
+
+<table class="table">
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">客户姓名：</label>
+        <div class="layui-input-block">
+            <input type="text" id="name" required lay-verify="required" autocomplete="off" class="layui-input "placeholder="请输入客户姓名">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">客户手机号：</label>
+        <div class="layui-input-block">
+            <input type="text" id="phone" required lay-verify="required" autocomplete="off" class="layui-input "placeholder="请输入客户手机号">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">客户首套：</label>
+        <div class="layui-input-block">
+            <input type="text" id="shou" required lay-verify="required" autocomplete="off" class="layui-input "placeholder="请输入客户首套或二套">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">客户贷款：</label>
+        <div class="layui-input-block">
+            <input type="text" id="dai" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入客户贷款或全款">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">购房需求：</label>
+        <div class="layui-input-block">
+            <textarea type="text" id="xu" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入客户购房需求"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
+        <label class="layui-form-label">是否带看：</label>
+        <div class="layui-input-block">
+            <select id="Select1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请选择楼盘" ;>
+                <option value="0">已带看</option>
+                <option value="1">未带看</option>
+            </select>
+        </div>
+    </div>
+     
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="addst()">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="cong()">重置</button>
+        </div>
+    </div>
+</table>
+<script src="~/jquery-3.3.1.min.js"></script>
+
+<script>
+    function addst() {
+        var na = $("#name").val();
+        if (na == "") {
+            alert("姓名不能为空！");
+            return;
+        }
+        var ph = $("#phone").val();
+        if (ph=="") {
+            alert("手机号不能为空！");
+            return;
+        }
+        var p = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+        if (!p.test(ph)) {
+            alert("手机格式不正确!");
+            return;
+        }
+        var sou = $("#shou").val();
+        var d = $("#dai").val();
+        var x = $("#xu").val();
+        var kan = $("#Select1").val();
+        $.ajax({
+            url: "",
+            type: "",
+            dataType: "",
+            data: {
+                CName: na,
+                CPlaneNumber: ph,
+                ClientFirstHouse: sou,
+                Clientloans: d,
+                BuyHouseRole: x,
+                DaiKan: kan,
+                AId: 1,
+                Cstates:0
+            },
+            success:
+                function (d) {
+                    if (d > 0) {
+                        alert("添加成功！");
+                        location.reload();
+                    } else {
+                        alert("添加失败！");
+                    }
+                }
+        })
+    }
+</script>
+

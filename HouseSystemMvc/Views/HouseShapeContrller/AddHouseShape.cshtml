@@ -7,16 +7,15 @@
     <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
         <label class="layui-form-label">房间号：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入楼盘名称；如：东滩云墅" ;>
+            <input type="text" id="fjh" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入房间号；如：5-3-1203" ;>
 
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
         <label class="layui-form-label">均价：</label>
         <div class="layui-input-block">
-            <form method="post" enctype="multipart/form-data" id="form">
-                <input type="file" name="file" id="file" multiple="multiple" />
-            </form>
+            <input type="text" id="jj" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="" ;>
+
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:60px;width: 90%">
@@ -85,6 +84,16 @@
         })
     })
     function addst() {
+        var fj = $("#fjh").val();
+        if (fj == "") {
+            alert("请输入房间号！");
+            return;
+        }
+        var j = $("#jj").val();
+        if (j == "") {
+            alert("请输入均价！");
+            return; 
+        }
         $.ajax({
             url: "",
             type: "",
@@ -92,7 +101,7 @@
             data: {},
             success:
                 function (d) {
-
+                    
                 }
         })
     }

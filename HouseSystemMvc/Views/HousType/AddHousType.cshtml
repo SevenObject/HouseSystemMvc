@@ -7,19 +7,19 @@
     <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
         <label class="layui-form-label">户型：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入户型；如：3室2厅2卫1厨" ;>
+            <input type="text" id="hx" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入户型；如：3室2厅2卫1厨" ;>
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
         <label class="layui-form-label">户型面积：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入户型面积；如：140㎡" ;>
+            <input type="text" id="hxmj" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入户型面积；如：140㎡" ;>
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
         <label class="layui-form-label">总价：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入总价；如：448" ;>
+            <input type="text" id="zj" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入总价；如：448" ;>
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
@@ -33,7 +33,7 @@
     <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
         <label class="layui-form-label">朝向：</label>
         <div class="layui-input-block">
-            <input type="text" id="Text1" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入朝向；如：南" ;>
+            <input type="text" id="cx" required lay-verify="required" autocomplete="off" class="layui-input " placeholder="请输入朝向；如：南" ;>
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:50px;width: 90%">
@@ -72,6 +72,36 @@
     })
     
     function addst() {///保存
+        var hx = $("#hx").val();
+        if (hx == "") {
+            alert("请输入户型！");
+            return;
+        }
+        var hxmj = $("#hxmj").val();
+        if (hxmj == "") {
+            alert("请输入户型面积！");
+            return;
+        }
+        var zj = $("#zj").val();
+        if (zj=="") {
+            alert("请输入总价！");
+            return;
+        }
+        var pr = $("#form").val();
+        if (pr == "") {
+            alert("请选择图片！");
+            return;
+        }
+        var cx = $("#cx").val();
+        if (cx == "") {
+            alert("请输入朝向！");
+            return;
+        }
+        var lp = $("#Select1").val();
+        if (lp == "") {
+            alert("请选择楼盘！");
+            return;
+        }
         $.ajax({
             url: "",
             type: "",
