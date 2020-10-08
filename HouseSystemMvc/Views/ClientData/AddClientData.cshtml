@@ -56,7 +56,20 @@
 <script>
     function addst() {
         var na = $("#name").val();
+        if (na == "") {
+            alert("姓名不能为空！");
+            return;
+        }
         var ph = $("#phone").val();
+        if (ph=="") {
+            alert("手机号不能为空！");
+            return;
+        }
+        var p = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+        if (!p.test(ph)) {
+            alert("手机格式不正确!");
+            return;
+        }
         var sou = $("#shou").val();
         var d = $("#dai").val();
         var x = $("#xu").val();

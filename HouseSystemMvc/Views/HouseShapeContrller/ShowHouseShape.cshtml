@@ -156,7 +156,7 @@
                     $(res.houseShapes).each(function () {
                         tg += "<tr>"
                             + "<td>" + this.hNumber + "</td>"
-                            + "<td>" + this.housePicture + "</td>"
+                            + "<td>" + "<img src = " + this.housePicture + " style='width: 115px; height: 100px'/>" + "</td>"
                             + "<td>" + this.orientation + "</td>"
                             + "<td>" + this.averagePrice + "元/㎡</td>"
                             + "<td style='color: red'>" + (this.houseState == 0 ? "在售" : this.houseState == 1 ? "已售" : "预定") + "</td>"

@@ -1,4 +1,4 @@
-﻿
+﻿`
 @{
     ViewData["Title"] = "UpdateHouseShape";
 }
@@ -16,7 +16,7 @@
         <label class="layui-form-label">房间图片：</label>
         <div class="layui-input-block">
             <div id="pic" style='width: 80px; height: 80px'></div>
-            <span style="color:red">*不可更改*</span>
+            <span style="color:red"></span>
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
@@ -35,7 +35,7 @@
     <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
         <label class="layui-form-label">房间状态：</label>
         <div class="layui-input-block">
-            <input type="text" id="fjzt" required lay-verify="required" autocomplete="off" class="layui-input " readonly>
+            <input type="text" id="fjzt" required lay-verify="required" autocomplete="off" class="layui-input " >
         </div>
     </div>
     <div class="layui-form-item" style="margin-bottom:20px;width: 90%">
@@ -85,7 +85,7 @@
                     console.log(res);
                     $(res).each(function () {
                         $("#fjh").val(this.hNumber);
-                        $("#pic").val(this.housePicture);
+                        $("#pic").append('<img src = "' + this.housePicture + '" style="width: 110px; height: 120px"/>');
                         $("#cx").val(this.orientation);
                         $("#jj").val(this.averagePrice);
                         if (this.houseState == 0) {
