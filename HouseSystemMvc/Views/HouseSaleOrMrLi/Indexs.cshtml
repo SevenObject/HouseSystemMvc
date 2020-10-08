@@ -1,0 +1,313 @@
+﻿
+@{
+    ViewData["Title"] = "Indexs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/jquery-3.3.1.min.js"></script>
+<div class="wrap-container clearfix">
+    <div class="column-content-detail" style="top:10px">
+        <div class="layui-form" id="table-list" style="top:5px">
+            <input type="text" id="sstext" name="name" value="" placeholder="请输入关键词" />
+            <span id="qb">全部</span>&nbsp;&nbsp;&nbsp; <span id="as">已销售</span>&nbsp;&nbsp;&nbsp; <span id="bs">未销售</span>&nbsp;&nbsp;&nbsp;<span id="yd">已预订</span>
+            <table class="layui-table" lay-even lay-skin="nob" id="div">
+                <thead class="layui-table">
+                    <tr style="color:#20bceb">
+                        <td style="color:red">经纪人</td>
+                        <td style="color:red">客户</td>
+                        <td style="color:red">楼盘名称</td>
+                        <td style="color:red">房型</td>
+                        <td style="color:red">楼栋号</td>
+                        <td style="color:red">房产销售日期</td>
+                        <td style="color:red">合同签订日期</td>
+                        <td style="color:red">销售状态</td>
+                    </tr>
+                </thead>
+                <tbody id="show_tab">
+                    <tr id="show_tab_one"></tr>
+                </tbody>
+            </table>
+            <div style="display:none" id="div1"></div>
+            <div style="display:none" id="div2"></div>
+            <div style="display:none" id="div3"></div>
+            <div style="margin-left:400px">
+                <input  id="lastpage" type="button" value="上一页">
+                <input  id="curPage" type="text" size="5">
+                <input  id="npage" type="button" value="确定">
+                <input  id="nextpage" type="button" value="下一页">
+                共
+                <input id="page" type="text" size="1" readonly="readonly">页
+                每页显示
+                <input id="pageSize" type="text" value="2" size="5">行
+                <button class="button" onclick="pageSize2()">确定</button>
+            </div>           
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        show();
+    });
+    function show() {
+        document.getElementById("div").style.display = "block";
+        document.getElementById("div1").style.display = "none";
+        document.getElementById("div2").style.display = "none";
+        document.getElementById("div3").style.display = "none";
+        $.ajax({
+            url: "http://localhost:60345/api/liyonghao/Show_market",
+            type: 'get',
+            dataType: 'JSON',
+            success: function (d) {
+                $("#show_tab").empty();
+                $(d).each(function () {
+                    var html = "<tr>";
+                    html += "<td><a style='cursor:pointer' title='经纪人' >" + this.aName + "</a></td>";
+                    html += "<td>" + this.cName + "</td>";
+                    html += "<td>" + this.hName + "</td>";
+                    html += "<td>" + this.hNames + "</td>";
+                    html += "<td>" + this.hNumber + "</td>";
+                    html += "<td>" + this.saleDateTime + "</td>";
+                    html += "<td>" + this.writeOkDatetime + "</td>";
+                    html += "<td>" + (this.houseState == 0 ? "在售" : this.houseState == 1 ? "未售" : "预定") + "</td>";
+                    html += "</tr>";
+                    $("#show_tab").append(html);
+                });
+            }
+        });
+    }
+
+    function show2() {
+        $.ajax({
+            url: "http://localhost:60345/api/liyonghao/Show_market2",
+            type: 'get',
+            dataType: 'JSON',
+            success: function (d) {
+                $("#show_tab").empty();
+                $(d).each(function () {
+                    var html = "<tr>";
+                    html += "<td>" + this.aName + "</td>";
+                    html += "<td>" + this.cName + "</td>";
+                    html += "<td>" + this.hName + "</td>";
+                    html += "<td>" + this.hNumber + "</td>";
+                    html += "<td>" + this.hNames + "</td>";
+                    html += "<td>" + this.saleDateTime + "</td>";
+                    html += "<td>" + this.writeOkDatetime + "</td>";
+                    html += "<td>" + (this.houseState == 0 ? "在售" : this.houseState == 1 ? "未售" : "预定") + "</td>";
+                    html += "</tr>";
+                    $("#show_tab").append(html);
+                });
+            }
+        });
+    }
+    function show3() {
+        $.ajax({
+            url: "http://localhost:60345/api/liyonghao/Show_market3",
+            type: 'get',
+            dataType: 'JSON',
+            success: function (d) {
+                $("#show_tab").empty();
+                $(d).each(function () {
+                    var html = "<tr>";
+                    html += "<td>" + this.aName + "</td>";
+                    html += "<td>" + this.cName + "</td>";
+                    html += "<td>" + this.hName + "</td>";
+                    html += "<td>" + this.hNumber + "</td>";
+                    html += "<td>" + this.hNames + "</td>";
+                    html += "<td>" + this.saleDateTime + "</td>";
+                    html += "<td>" + this.writeOkDatetime + "</td>";
+                    html += "<td>" + (this.houseState == 0 ? "在售" : this.houseState == 1 ? "未售" : "预定") + "</td>";
+                    html += "</tr>";
+                    $("#show_tab").append(html);
+                });
+            }
+        });
+    }
+    function show4() {
+        $.ajax({
+            url: "http://localhost:60345/api/liyonghao/Show_market4",
+            type: 'get',
+            dataType: 'JSON',
+            success: function (d) {
+                $("#show_tab").empty();
+                $(d).each(function () {
+                    var html = "<tr>";
+                    html += "<td>" + this.aName + "</td>";
+                    html += "<td>" + this.cName + "</td>";
+                    html += "<td>" + this.hName + "</td>";
+                    html += "<td>" + this.hNumber + "</td>";
+                    html += "<td>" + this.hNames + "</td>";
+                    html += "<td>" + this.saleDateTime + "</td>";
+                    html += "<td>" + this.writeOkDatetime + "</td>";
+                    html += "<td>" + (this.houseState == 0 ? "在售" : this.houseState == 1 ? "未售" : "预定") + "</td>";
+                    html += "</tr>";
+                    $("#show_tab").append(html);
+                });
+            }
+        });
+    }
+
+
+    //table分页
+    var pageSize = 2;  //每页显示的记录条数
+    var curPage = 0;   //显示第curPage页
+    var len;         //总行数
+    var page;        //总页数
+    $(function () {
+
+        len = $("#show_tab tr").length - 1;   //去掉表头
+        page = len % pageSize == 0 ? len / pageSize : Math.floor(len / pageSize) + 1;//根据记录条数，计算页数
+        console.log("len:" + len + "page:" + page);
+        document.getElementById("page").value = page;
+        curPage = 1;
+        displayPage();//显示第一页
+        $("#nextpage").click(function () {//下一页
+            if (curPage < page) {
+                curPage += 1;
+            }
+            else {
+                alert("已是最后一页");
+            }
+            displayPage();
+        });
+        $("#lastpage").click(function () {//上一页
+            if (curPage > 1) {
+                curPage -= 1;
+            }
+            else {
+                alert("已是第一页");
+            }
+            displayPage();
+        });
+        $("#npage").click(function () {//跳到固定某一页
+            var npage = parseInt(document.getElementById("curPage").value);
+            if (npage > page || npage < 1) {
+                alert("该页不存在");
+            }
+            else {
+                curPage = npage;
+            }
+            displayPage();
+        });
+    });
+
+    function displayPage() {
+        var begin = (curPage - 1) * pageSize;//起始记录号
+        var end = begin + pageSize;
+        console.log("begin:" + len + "end:" + end);
+        if (end > len) end = len;
+        $("#show_tab tr").hide();
+        $("#show_tab tr").each(function (i) {
+            if (i - 1 >= begin && i - 1 < end)//显示第page页的记录
+            {
+                $("#show_tab_one").show();
+                $(this).show();
+                document.getElementById("curPage").value = curPage;
+            }
+        });
+
+    }
+    function pageSize2() {
+        curPage = 0;   //显示第curPage页
+        pageSize = parseInt(document.getElementById("pageSize").value);
+        len = $("#show_tab tr").length - 1;   //去掉表头
+        page = len % pageSize == 0 ? len / pageSize : Math.floor(len / pageSize) + 1;//根据记录条数，计算页数
+        console.log("len:" + len + "   page:" + page);
+        document.getElementById("page").value = page;
+        curPage = 1;
+        displayPage();//显示第一页
+    }
+
+    var text = "";
+    //实时筛选，不用点击按钮
+    setInterval(function () {
+        text = $('#sstext').val();//获取文本框输入
+        if ($.trim(text) != "") {
+            $("#show_tab tr:not('#theader')").hide().filter(":contains('" + text + "')").show();
+        }
+        else {
+
+        }
+    }, 100);
+
+    window.onload = function () {
+        var x1 = document.getElementById("as");
+        x1.onmouseover = function () {
+            var xd1 = document.getElementById("div1");
+            show2();
+            var xx1 = document.getElementById("div2");
+            xx1.style.display = 'none'
+        }
+        var x2 = document.getElementById("bs");
+        x2.onmouseover = function () {
+            var xd1 = document.getElementById("div2");
+            show3();
+            var xx1 = document.getElementById("div1");
+            xx1.style.display = 'none'
+        }
+        var x3 = document.getElementById("qb");
+        x3.onmouseover = function () {
+            var xd1 = document.getElementById("div");
+            show();
+            var xx1 = document.getElementById("div1");
+            xx1.style.display = 'none'
+            var xx1 = document.getElementById("div2");
+            xx1.style.display = 'none'
+        }
+        var x4 = document.getElementById("yd");
+        x4.onmouseover = function () {
+            var xd1 = document.getElementById("div3");
+            show4();
+            var xx1 = document.getElementById("div1");
+            xx1.style.display = 'none'
+            var xx1 = document.getElementById("div2");
+            xx1.style.display = 'none'
+        }
+    }
+</script>
+<style type="text/css">
+    .button {
+        display: block;
+        position: relative;
+        background: #00B16A;
+        color: #fff;
+        width: 25px;
+        height: 25px;
+        line-height: 50px;
+        text-align: center;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        text-decoration: none;
+        margin: 50px auto 0;
+        border-radius: 2px;
+        overflow: hidden;
+        -webkit-transition: all 0.15s ease-out;
+        transition: all 0.15s ease-out;
+    }
+
+        .button:before {
+            content: ' ';
+            position: absolute;
+            background: #fff;
+            width: 25px;
+            height: 50px;
+            top: 0;
+            left: -45px;
+            opacity: 0.3;
+            -webkit-transition: all 0.6s ease-out;
+            transition: all 0.6s ease-out;
+            -webkit-transform: skewX(-25deg);
+            transform: skewX(-25deg);
+        }
+
+        .button:hover {
+            background: #26C281;
+        }
+
+            .button:hover:before {
+                width: 45px;
+                left: 55px;
+            }
+</style>
+
+
