@@ -72,7 +72,7 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="addst()">保存修改</button>
-            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="cong()">重置</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" type="button" onclick="cong()">取消修改</button>
         </div>
     </div>
 </table>
@@ -119,6 +119,9 @@
                     }
                 }
         })
+    }
+    function cong() {
+        location.href = "http://localhost:5400/AdministratorDatas/ShowAdministratorDatas";
     }
 </script>
 

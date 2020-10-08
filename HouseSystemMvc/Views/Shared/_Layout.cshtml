@@ -32,6 +32,12 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="iconfont">&#xe608;</i>客户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" data-url="menu3.html" data-id='3' onclick="Showkh()" data-text="YYYY"><span class="l-line"></span>客户信息</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;"><i class="iconfont">&#xe608;</i>房产销售管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" data-url="" data-id='9' data-text="XXXXX" onclick="HouseSale()"><span class="l-line"></span>房产销售</a></dd>
@@ -129,5 +135,11 @@
     }
     function loca() {
         location.href = "http://localhost:5400/ContractController/Login";
+    }
+    function Shouhousetype() {
+        location.href = "http://localhost:5400/HouseShapeContrller/ShowHouseShape";
+    }
+    function Showkh() {
+        location.href = "http://localhost:5400/ClientData/ShowClientData";
     }
 </script>
